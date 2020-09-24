@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "./components/Header";
-import TableData from "./components/TableData";
+import TableData from "./utils/TableData";
 
 function App() {
   return (
