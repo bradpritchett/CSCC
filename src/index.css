@@ -5,15 +5,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-
-body {
 	background-color: white;
 }
 
@@ -23,6 +14,7 @@ table {
 	color: #000;
 	border-radius: 7px;
 	border: 2px solid black;
+	height: 402px;
 }
 
 thead {
@@ -31,9 +23,10 @@ thead {
     border-color: inherit;
 }
 
-tr {
+tbody tr {
     border-left: 1px solid #fff;
-    border-right: 1px solid #fff;
+	border-right: 1px solid #fff;
+	height: 35px;
 }
 td {
 	padding: 7px;
@@ -45,16 +38,32 @@ td {
 }
 
 ul.pagination {
-    width: 150px;
-    margin: 0 auto;
+    width: 203px;
+	margin: 0 auto;
+	padding: 0;
 }
 
 .pagination li {
     display: inline-block;
     padding: 7px;
-    background: white;
+	background: white;
+	border-radius: 7px;
+	margin: 7px;
+}
+.pagination.load li:first-child, .pagination li.active {
+	background: black;
+}
+.pagination.load li:first-child a, .pagination li.active a {
+	color:white;
+}
+.pagination a {
+	padding: 3px;
+	text-decoration: none;
 }
 
-.pagination a {
-    padding: 7px;
+input[name="search"] {
+    width: 99%;
+    padding: 7px 0;
+    margin: 7px auto;
+    text-align: center;
 }
