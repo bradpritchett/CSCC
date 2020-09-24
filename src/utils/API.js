@@ -1,5 +1,4 @@
 export default {
-
 	tables: function() {
 		return fetch('https://code-challenge.spectrumtoolbox.com/api/restaurants', {
 			method: 'GET',

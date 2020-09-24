@@ -12,3 +12,49 @@ code {
     monospace;
 }
 
+
+body {
+	background-color: white;
+}
+
+table {
+    width: 100%;
+    background: #fff;
+	color: #000;
+	border-radius: 7px;
+	border: 2px solid black;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+td {
+	padding: 7px;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+ul.pagination {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.pagination li {
+    display: inline-block;
+    padding: 7px;
+    background: white;
+}
+
+.pagination a {
+    padding: 7px;
+}
