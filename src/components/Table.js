@@ -6,14 +6,6 @@ const Table = ({data}) => {
 		<table>
 			<thead>
 				<tr>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-				</tr>
-				<tr>
 					<th>Restaurant</th>
 					<th>Address</th>
 					<th>City</th>
