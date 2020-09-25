@@ -10,8 +10,11 @@ const [data, setData] = useState([]);
 const [initialData, setInitialData] = useState({});
 const [page, setPage] = useState(1);
 const [pagesPer] = useState(10);
-const [search, setSearch] = useState(null);
-const [genre, setGenre] =useState([]);
+const [searchText, setSearchText] = useState("default");
+const [filters, setFilters] = useState({
+	state: "All States",
+		genre: "All Genre"
+})
 
 	// Fetching data on mount
 	useEffect(() => {
@@ -44,11 +47,15 @@ const [genre, setGenre] =useState([]);
 	// Processes filter changes sent from Filter.js
 	function filterDataItems(filter) {
 		const state = filter.state;
-		const genre = filter.genres;
+		const genre = filter.genre;
+		setFilters({
+			state,
+			genre
+		})
 		let filteredData = initialData;
 
 		if (state.includes("All") && genre.includes("All")) {
-			sortData(initialData)
+			sortData(initialData);
 		}
 		else if (!state.includes("All") && genre.includes("All")) {
 			filteredData = initialData.filter(item => item.state === state)				
@@ -72,31 +79,25 @@ const [genre, setGenre] =useState([]);
 			}
 	};
 
-	// Applies Search filter 
+	// Applies Search filter when state item searchText is updated
 	useEffect(() => {		
-		const keys = ["city", "name", "genre"]
-		const values = ["Albany"]
-		var result = data.filter(e => {
-			return keys.every(a => {
-				console.log(a)
-			  return values.includes(e[a])
-			})
-		  })
-		 
-		
-		// data.filter(item => { 	 
-		// 	console.log(asdf.includes(search))
-		// 	return item.name.toLowerCase().includes(search.toLowerCase());			
-		// })
-	}, [search]);
+		// Does not look in these keys
+		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
 
-	
-	useEffect(() => {
-		data.forEach(element => {
-			genre.push(element.genre)
-		})
+		const lowerCaseValue = searchText.toLowerCase();
+		  if (lowerCaseValue === "") {
+			filterDataItems(filters);
+		}
+		  else {
+			  const filteredData = data.filter(item => {
+			return Object.keys(item).some(key =>
+				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
+			);
+		  });
+		  sortData(filteredData);
+		}
+	}, [searchText]);
 
-	},[data])
 
 	// Determine first and last index of data for pagination
 	const indexOfLast = page * pagesPer;
@@ -107,8 +108,8 @@ const [genre, setGenre] =useState([]);
 		setPage(pageNumber)
 	};
 	
-	const searchData = (a) => {		
-		setSearch(a);
+	const searchData = (a) => {
+		setSearchText(a);
 	}
 
 	return ( 
