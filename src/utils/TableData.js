@@ -56,6 +56,7 @@ const [filters, setFilters] = useState({
 
 		if (state.includes("All") && genre.includes("All")) {
 			sortData(initialData);
+			
 		}
 		else if (!state.includes("All") && genre.includes("All")) {
 			filteredData = initialData.filter(item => item.state === state)				
@@ -79,9 +80,9 @@ const [filters, setFilters] = useState({
 			}
 	};
 
-	// Applies Search filter when state item searchText is updated
-	useEffect(() => {		
-		// Does not look in these keys
+
+	function searchItems() {
+		setPage(1)
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
 
 		const lowerCaseValue = searchText.toLowerCase();
@@ -96,6 +97,11 @@ const [filters, setFilters] = useState({
 		  });
 		  sortData(filteredData);
 		}
+	}
+	// Applies Search filter when state item searchText is updated
+	useEffect(() => {		
+		// Does not look in these keys
+		searchItems()
 	}, [searchText]);
 
 
