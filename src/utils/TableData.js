@@ -22,10 +22,9 @@ const [genre, setGenre] =useState([]);
 			})
 	}, []);
 
-	const dataReducer = data => { setData(data)};
-
 	// Alphabetical sort of returned data
 	const sortData = (data) => {
+		// console.log("data is", data)
 		let sortedData = [...data];
 		sortedData.sort((a,b) => {
 			if (a.name < b.name) {
@@ -36,26 +35,45 @@ const [genre, setGenre] =useState([]);
 			}
 			return 0;
 		});
-		
+		//Sent to the reducer to set state with sorted date
 		dataReducer(sortedData);
 	};
+	
+	// Data state set here only
+	const dataReducer = data => { setData(data)};
 
 	// Processes filter changes sent from Filter.js
-	function filterDataItems(a,b) {
-		if (b === "All States") {
+	function filterDataItems(filter) {
+		const state = filter.state;
+		const genre = filter.genres;
+		let filteredData = initialData;
+		console.log("state & genre", state, genre)
+
+		if (state.includes("All") && genre.includes("All")) {
 			sortData(initialData)
-		} else {
-			const filteredData = initialData.filter(item => item[a] === b);
-			if (filteredData.length === 0) {
-				sortData([{
+		}
+		else if (!state.includes("All") && genre.includes("All")) {
+			filteredData = initialData.filter(item => item.state === state)				
+				
+		} else if (state.includes("All") && !genre.includes("All")) {
+			filteredData = initialData.filter(item => item.genre.includes(genre))				
+			console.log('filter', filteredData)
+		 }
+		  else {		 	
+			  console.log("HMM")
+			 filteredData = initialData.filter(item => item.state === state);
+			 filteredData = filteredData.filter(item =>  item.genre.includes(genre));	 
+		 }
+		
+		if (filteredData.length === 0) {
+			sortData([{
 					id: Math.floor(Math.random() * 20),
-					name: 'No results for ' + b
+					name: 'No results for ' + state
 				}])
 			}
 			else {
 				return sortData(filteredData);	
 			}
-		}
 	};
 
 	// Applies Search filter 
