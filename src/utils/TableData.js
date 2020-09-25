@@ -13,7 +13,7 @@ const [pagesPer] = useState(10);
 const [searchText, setSearchText] = useState("default");
 const [filters, setFilters] = useState({
 	state: "All States",
-		genre: "All Genre"
+	genre: "All Genre"
 })
 
 	// Fetching data on mount
@@ -46,6 +46,8 @@ const [filters, setFilters] = useState({
 
 	// Processes filter changes sent from Filter.js
 	function filterDataItems(filter) {
+		//resets pagination to first page
+		setPage(1);
 		const state = filter.state;
 		const genre = filter.genre;
 		setFilters({
@@ -56,7 +58,6 @@ const [filters, setFilters] = useState({
 
 		if (state.includes("All") && genre.includes("All")) {
 			sortData(initialData);
-			
 		}
 		else if (!state.includes("All") && genre.includes("All")) {
 			filteredData = initialData.filter(item => item.state === state)				
@@ -80,7 +81,7 @@ const [filters, setFilters] = useState({
 			}
 	};
 
-
+	// Search function
 	function searchItems() {
 		setPage(1)
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
@@ -98,13 +99,16 @@ const [filters, setFilters] = useState({
 		  sortData(filteredData);
 		}
 	}
-	// Applies Search filter when state item searchText is updated
+
+	// Runs Search filter function when state.searchText is updated
 	useEffect(() => {		
-		// Does not look in these keys
 		searchItems()
 	}, [searchText]);
 
-
+	// Function passed to Search.js
+	const searchData = (a) => {
+		setSearchText(a);
+	}
 	// Determine first and last index of data for pagination
 	const indexOfLast = page * pagesPer;
 	const indexOfFirst = indexOfLast - pagesPer;
@@ -114,9 +118,6 @@ const [filters, setFilters] = useState({
 		setPage(pageNumber)
 	};
 	
-	const searchData = (a) => {
-		setSearchText(a);
-	}
 
 	return ( 
 		<>
