@@ -5,7 +5,10 @@ const Pagination = ({pagesPer, page, total, paginate}) => {
 	for (let i = 1; i <= Math.ceil(total / pagesPer); i++) {
 		pageNumbers.push(i);
 	};
+
+	
 	useEffect(() => {
+		
 		const paginationUl = document.querySelector('.pagination');
 		const paginationLi = document.querySelectorAll(".pagination li");
 		const activeLi = document.getElementsByClassName(`${page}`)
@@ -25,7 +28,7 @@ const Pagination = ({pagesPer, page, total, paginate}) => {
 		<ul className="pagination load">
 			{pageNumbers.map(number => (
 				<li key={number} className={number}>
-					<a onClick={() => paginate(number)} href="!#" >
+					<a onClick={() => paginate(number)}  >
 						{number}
 					</a>
 				</li>

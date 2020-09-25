@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from "./components/Header";
-import TableData from "./utils/TableData";
+import Table from "./utils/TableData";
 
 function App() {
   return (
     <div className="container">
 		<Header />
-		<TableData />
+		<Table />
     </div>
   );
 }
