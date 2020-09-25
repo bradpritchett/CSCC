@@ -5,7 +5,7 @@ const Filter = ({filterDataItems}) => {
 
 	const [filter, setFilter] = useState({
 		state: "All States",
-		genres: "All Genres"
+		genre: "All Genre"
 	});
 
 	const generateStates = () => {
@@ -16,7 +16,7 @@ const Filter = ({filterDataItems}) => {
 	   return options;
 	};
 
-	const generateGenres = () => {
+	const generateGenre = () => {
 		let options = [];
 		for (let i = 0; i <= genres.length; i++) {             
 			options.push(<option key={i} value={genres[i]}>{genres[i]}</option>);   
@@ -43,8 +43,8 @@ const Filter = ({filterDataItems}) => {
 			<select name="state" onChange={selected} value={filter.states}>
 				{(generateStates())}
 			</select>
-			<select name="genres" onChange={selected} value={filter.genres}>
-				{(generateGenres())}
+			<select name="genre" onChange={selected} value={filter.genre}>
+				{(generateGenre())}
 			</select>
 		</div>
 	)
