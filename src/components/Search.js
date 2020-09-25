@@ -6,7 +6,7 @@ const Search = ({searchData}) => {
 		searchData(value);
 	} 
 return (
-	<input type="text" name="search" onChange={handleInputChange}  />
+	<input type="text" name="search" onChange={handleInputChange} placeholder="Search by restaurant Name, City or Genre" />
 	)
 };
 
