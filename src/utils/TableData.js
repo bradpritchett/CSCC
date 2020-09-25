@@ -24,7 +24,6 @@ const [genre, setGenre] =useState([]);
 
 	// Alphabetical sort of returned data
 	const sortData = (data) => {
-		// console.log("data is", data)
 		let sortedData = [...data];
 		sortedData.sort((a,b) => {
 			if (a.name < b.name) {
@@ -47,7 +46,6 @@ const [genre, setGenre] =useState([]);
 		const state = filter.state;
 		const genre = filter.genres;
 		let filteredData = initialData;
-		console.log("state & genre", state, genre)
 
 		if (state.includes("All") && genre.includes("All")) {
 			sortData(initialData)
@@ -57,10 +55,8 @@ const [genre, setGenre] =useState([]);
 				
 		} else if (state.includes("All") && !genre.includes("All")) {
 			filteredData = initialData.filter(item => item.genre.includes(genre))				
-			console.log('filter', filteredData)
 		 }
 		  else {		 	
-			  console.log("HMM")
 			 filteredData = initialData.filter(item => item.state === state);
 			 filteredData = filteredData.filter(item =>  item.genre.includes(genre));	 
 		 }
