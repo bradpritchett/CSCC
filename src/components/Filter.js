@@ -40,12 +40,16 @@ const Filter = ({filterDataItems}) => {
 
 	return (
 		<div className="select">
-			<select name="state" onChange={selected} value={filter.states}>
-				{(generateStates())}
-			</select>
-			<select name="genre" onChange={selected} value={filter.genre}>
-				{(generateGenre())}
-			</select>
+			<span>
+				<select name="state" onChange={selected} value={filter.states}>
+					{(generateStates())}				
+				</select>
+			</span>
+			<span>
+				<select name="genre" onChange={selected} value={filter.genre}>
+					{(generateGenre())}
+				</select>
+			</span>	
 		</div>
 	)
 }

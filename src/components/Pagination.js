@@ -1,6 +1,7 @@
 import React,{useEffect} from "react";
 
 const Pagination = ({pagesPer, page, total, paginate}) => {
+	console.log("pages ",total)
 	const pageNumbers = [];
 	for (let i = 1; i <= Math.ceil(total / pagesPer); i++) {
 		pageNumbers.push(i);
@@ -23,7 +24,11 @@ const Pagination = ({pagesPer, page, total, paginate}) => {
 		} 
 	}, [page])
 	
-
+if (total < 10) {
+	return (
+		<div>{console.log(total)}</div>
+	)
+} else {
 	return (
 		<ul className="pagination load">
 			{pageNumbers.map(number => (
@@ -35,6 +40,10 @@ const Pagination = ({pagesPer, page, total, paginate}) => {
 			))}
 		</ul>
 	)
+}
+	 
+	
+
 };
 
 export default Pagination;

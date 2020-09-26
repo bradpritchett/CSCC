@@ -1,6 +1,5 @@
-h1 {
-	font-family: 'Josefin Slab', serif;
-}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,6 +8,45 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 	background-color: white;
+}
+
+h1 {
+	font-family: 'Josefin Slab', serif;
+	text-align: center;
+}
+
+.head {
+    background: black;
+    color: white;
+    padding: 7px;
+	margin: 7px 0;
+    border-radius: 7px;
+}
+
+input[name="search"] {
+    width: 99%;
+    padding: 7px 0;
+    margin: 7px auto;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 7px;
+}
+.select span {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 50%;
+}
+.select select {
+    width: 99%;
+    padding: 7px;
+    margin: 7px 0;
+    border: 2px solid black;
+    border-radius: 7px;
+}
+
+.select select:focus {
+    outline: none;
 }
 
 table {
@@ -42,12 +80,6 @@ td {
 	padding: 7px;
 }
 
-.select select {
-    width: 48%;
-    padding: 7px;
-    margin: 7px;
-}
-
 .container {
 	max-width: 1200px;
 	margin: 0 auto;
@@ -74,13 +106,6 @@ ul.pagination {
 	color:white;
 }
 .pagination a {
-	padding: 3px;
+	padding: 7px;
 	text-decoration: none;
-}
-
-input[name="search"] {
-    width: 99%;
-    padding: 7px 0;
-    margin: 7px auto;
-    text-align: center;
 }
