@@ -10,7 +10,7 @@ body {
 	background-color: white;
 }
 
-h1 {
+h1, li a {
 	font-family: 'Josefin Slab', serif;
 	text-align: center;
 }
@@ -24,7 +24,7 @@ h1 {
 }
 
 input[name="search"] {
-    width: 99%;
+    width: 100%;
     padding: 7px 0;
     margin: 7px auto;
     text-align: center;
@@ -42,7 +42,11 @@ input[name="search"] {
     padding: 7px;
     margin: 7px 0;
     border: 2px solid black;
-    border-radius: 7px;
+	border-radius: 7px;
+	float: right;
+}
+.select span:first-of-type select {
+    float: left;
 }
 
 .select select:focus {
@@ -63,7 +67,14 @@ thead {
     vertical-align: middle;
     border-color: inherit;
 }
-
+th {
+	border-bottom: 1px solid black;
+	padding: 7px;
+}
+thead tr:hover {
+	background: black;
+	color: white;
+}
 tbody tr {
     border-left: 1px solid #fff;
 	border-right: 1px solid #fff;

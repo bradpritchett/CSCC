@@ -1,56 +1,41 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {state,genres} from "../utils/Data";
 
-const Filter = ({filterDataItems}) => {
+const Filter = ({filterDataItems, name}) => {
 
-	const [filter, setFilter] = useState({
-		state: "All States",
-		genre: "All Genre"
-	});
-
-	const generateStates = () => {
-		let options = [];
-		for (let i = 0; i <= state.length; i++) {             
-			options.push(<option key={i} value={state[i]}>{state[i]}</option>);   
-	   }
-	   return options;
-	};
-
-	const generateGenre = () => {
-		let options = [];
-		for (let i = 0; i <= genres.length; i++) {             
-			options.push(<option key={i} value={genres[i]}>{genres[i]}</option>);   
-	   }
-	   return options;
-	};
 	
 
-	function selected(e) 	 {
-		let name = e.target.name;
-		let value = e.target.value;
-		filterReducer(name, value);
+	const generateOptions = () => {
+		let options = [];
+		if (name === "state") {
+			name = state
+		} else {
+			name = genres
+		}
+		for (let i = 0; i <= name.length; i++) {             
+			options.push(<option key={i} value={name[i]}>{name[i]}</option>);   
+	   }
+	   return options;
 	};
 
-	const filterReducer = (a,b) => {
+	function selected(e) 	 {
+		let key = e.target.name;
+		let value = e.target.value;
+		filterReducer(key, value);
+	};
+
+	const filterReducer = (key,value) => {
 		let obj = {}
-		obj = { ...filter, [a]: b}
-		setFilter(obj);
+		obj = { [key]: value}
 		filterDataItems(obj)
 	}
 
+
 	return (
-		<div className="select">
-			<span>
-				<select name="state" onChange={selected} value={filter.states}>
-					{(generateStates())}				
-				</select>
-			</span>
-			<span>
-				<select name="genre" onChange={selected} value={filter.genre}>
-					{(generateGenre())}
-				</select>
-			</span>	
-		</div>
+		
+		<select name={name} onChange={selected} >
+			{(generateOptions())}
+		</select>
 	)
 }
 

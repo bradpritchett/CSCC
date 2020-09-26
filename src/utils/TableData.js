@@ -7,7 +7,7 @@ import Filter from "../components/Filter";
 
 const TableData = () => {
 const [data, setData] = useState([]);
-const [initialData, setInitialData] = useState({});
+const [initialData, setInitialData] = useState([{}]);
 const [page, setPage] = useState(1);
 const [pagesPer] = useState(10);
 const [searchText, setSearchText] = useState("default");
@@ -21,13 +21,14 @@ const [filters, setFilters] = useState({
 		API.tables()
 			.then(res => {
 				setInitialData(res);
-				sortData(res);
+				sortData(res)				
 			})
 	}, []);
 
 	// Alphabetical sort of returned data
-	const sortData = (data) => {
-		let sortedData = [...data];
+	const sortData = (arg) => {
+		let sortedData = [...arg];
+
 		sortedData.sort((a,b) => {
 			if (a.name < b.name) {
 				return -1;
@@ -37,23 +38,20 @@ const [filters, setFilters] = useState({
 			}
 			return 0;
 		});
+
 		//Sent to the reducer to set state with sorted date
 		dataReducer(sortedData);
 	};
 	
 	// Data state set here only
-	const dataReducer = data => { setData(data)};
+	const dataReducer = arg => { setData(arg)};
 
 	// Processes filter changes sent from Filter.js
-	function filterDataItems(filter) {
+	function filterItems() {
 		//resets pagination to first page
-		setPage(1);
-		const state = filter.state;
-		const genre = filter.genre;
-		setFilters({
-			state,
-			genre
-		})
+		
+		const state = filters.state;
+		const genre = filters.genre;
 		let filteredData = initialData;
 
 		if (state.includes("All") && genre.includes("All")) {
@@ -65,7 +63,7 @@ const [filters, setFilters] = useState({
 		} else if (state.includes("All") && !genre.includes("All")) {
 			filteredData = initialData.filter(item => item.genre.includes(genre))				
 		 }
-		  else {		 	
+		  else {		 
 			 filteredData = initialData.filter(item => item.state === state);
 			 filteredData = filteredData.filter(item =>  item.genre.includes(genre));	 
 		 }
@@ -83,7 +81,6 @@ const [filters, setFilters] = useState({
 
 	// Search function
 	function searchItems() {
-		setPage(1)
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
 
 		const lowerCaseValue = searchText.toLowerCase();
@@ -102,13 +99,29 @@ const [filters, setFilters] = useState({
 
 	// Runs Search filter function when state.searchText is updated
 	useEffect(() => {		
-		searchItems()
+		setPage(1);
+		searchItems();
 	}, [searchText]);
+	
+	useEffect(() => {
+		setPage(1);
+		filterItems();
+	}, [filters])
 
+	useEffect(() => {
+		sortData(initialData)
+	},[])
 	// Function passed to Search.js
-	const searchData = (a) => {
-		setSearchText(a);
+	const searchData = (arg) => {
+		setSearchText(arg);
 	}
+
+	const filterDataItems = (arg) => {
+		let newKey = Object.keys(arg);
+		newKey = newKey[0];
+		setFilters({...filters, [newKey]: arg[newKey] });
+	};
+
 	// Determine first and last index of data for pagination
 	const indexOfLast = page * pagesPer;
 	const indexOfFirst = indexOfLast - pagesPer;
@@ -118,15 +131,24 @@ const [filters, setFilters] = useState({
 		setPage(pageNumber)
 	};
 	
-
+	
 	return ( 
 		<>
 		<Search searchData={searchData} />
-		<Filter 
-			data={data} 
-			sortData={sortData}
-			filterDataItems={filterDataItems}
-		/>
+		<div className="select">
+			<span>
+				<Filter
+					name={'state'}
+					filterDataItems={filterDataItems}
+				/>
+			</span>
+			<span>
+				<Filter 
+					name={'genre'} 
+					filterDataItems={filterDataItems}
+				/>
+			</span>
+		</div>
 		<Table data={processedData} />
 		<Pagination 
 			pagesPer={pagesPer} 
