@@ -1,7 +1,6 @@
 import React,{useEffect} from "react";
 
 const Pagination = ({pagesPer, page, total, paginate}) => {
-	console.log("pages ",total)
 	const pageNumbers = [];
 	for (let i = 1; i <= Math.ceil(total / pagesPer); i++) {
 		pageNumbers.push(i);
