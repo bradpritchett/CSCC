@@ -6,11 +6,13 @@ import Search from "../components/Search";
 import Filter from "../components/Filter";
 
 const TableData = () => {
-const [data, setData] = useState([]);
+const [data, setData] = useState([{
+	id: Math.floor(Math.random() * 20)
+}]);
 const [initialData, setInitialData] = useState([{}]);
 const [page, setPage] = useState(1);
 const [pagesPer] = useState(10);
-const [searchText, setSearchText] = useState("default");
+const [searchText, setSearchText] = useState("");
 const [filters, setFilters] = useState({
 	state: "All States",
 	genre: "All Genre"
@@ -37,25 +39,24 @@ const [filters, setFilters] = useState({
 			}
 			return 0;
 		});
-
+		dataReducer(sortedData)
 		//Sent to the reducer to set state with sorted date
-		dataReducer(sortedData);
 	};
 	
 	// Data state set here only
-	const dataReducer = arg => { setData(arg)};
+	const dataReducer = arg => setData(arg);
 
 
 
 	// Search function
-	function searchItems(arg) {
+	function searchItems(sortedData) {
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
 		const lowerCaseValue = searchText.toLowerCase();
 		  if (lowerCaseValue === "") {
-			sortData(arg);
+			  sortData(sortedData);
 		}
 		  else {
-			  const filteredData = arg.filter(item => {
+			const filteredData = sortedData.filter(item => {
 			return Object.keys(item).some(key =>
 				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
 			);
@@ -67,13 +68,13 @@ const [filters, setFilters] = useState({
 	// Processes filter changes sent from Filter.js
 	function filterItems() {
 		//resets pagination to first page
-		
+
 		const state = filters.state;
 		const genre = filters.genre;
 		let filteredData = initialData;
 
 		if (state.includes("All") && genre.includes("All")) {
-			searchItems(initialData);
+			searchItems(filteredData);
 		}
 		else if (!state.includes("All") && genre.includes("All")) {
 			filteredData = initialData.filter(item => item.state === state)				
@@ -93,7 +94,7 @@ const [filters, setFilters] = useState({
 				}])
 			}
 			else {
-				return sortData(filteredData);	
+				return searchItems(filteredData);	
 			}
 	};
 
@@ -101,7 +102,7 @@ const [filters, setFilters] = useState({
 	// Runs Search filter function when state.searchText is updated
 	useEffect(() => {		
 		setPage(1);
-		searchItems(data);
+		filterItems();
 	}, [searchText]);
 	
 	useEffect(() => {
@@ -110,7 +111,7 @@ const [filters, setFilters] = useState({
 	}, [filters])
 
 	useEffect(() => {
-		sortData(initialData)
+		filterItems()
 	},[initialData])
 
 	// Function passed to Search.js
@@ -123,7 +124,7 @@ const [filters, setFilters] = useState({
 		newKey = newKey[0];
 		setFilters({...filters, [newKey]: arg[newKey] });
 	};
-
+	
 	// Determine first and last index of data for pagination
 	const indexOfLast = page * pagesPer;
 	const indexOfFirst = indexOfLast - pagesPer;
