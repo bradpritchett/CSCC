@@ -46,7 +46,17 @@ const [filters, setFilters] = useState({
 	// Data state set here only
 	const dataReducer = arg => setData(arg);
 
-
+	const finalFilter = (filteredData) => {
+		if (filteredData.length === 0) {
+			sortData([{
+					id: Math.floor(Math.random() * 20),
+					name: 'No results'
+				}])
+			}
+			else {
+				return sortData(filteredData);	
+			}
+	}
 
 	// Search function
 	function searchItems(sortedData) {
@@ -61,7 +71,9 @@ const [filters, setFilters] = useState({
 				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
 			);
 		  });
-		  sortData(filteredData);
+
+		  finalFilter(filteredData)
+		 
 		}
 	}
 
@@ -74,7 +86,7 @@ const [filters, setFilters] = useState({
 		let filteredData = initialData;
 
 		if (state.includes("All") && genre.includes("All")) {
-			searchItems(filteredData);
+			finalFilter(filteredData);
 		}
 		else if (!state.includes("All") && genre.includes("All")) {
 			filteredData = initialData.filter(item => item.state === state)				
@@ -86,19 +98,19 @@ const [filters, setFilters] = useState({
 			 filteredData = initialData.filter(item => item.state === state);
 			 filteredData = filteredData.filter(item =>  item.genre.includes(genre));	 
 		 }
-		
-		if (filteredData.length === 0) {
+		 if (filteredData.length === 0) {
 			sortData([{
 					id: Math.floor(Math.random() * 20),
-					name: 'No results for ' + state
+					name: 'No results'
 				}])
 			}
 			else {
-				return searchItems(filteredData);	
+				searchItems(filteredData)
 			}
+		 
 	};
 
-
+	
 	// Runs Search filter function when state.searchText is updated
 	useEffect(() => {		
 		setPage(1);
