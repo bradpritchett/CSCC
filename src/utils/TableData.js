@@ -21,7 +21,6 @@ const [filters, setFilters] = useState({
 		API.tables()
 			.then(res => {
 				setInitialData(res);
-				sortData(res);		
 			})
 	}, []);
 
@@ -82,10 +81,9 @@ const [filters, setFilters] = useState({
 	// Search function
 	function searchItems(arg) {
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
-
 		const lowerCaseValue = searchText.toLowerCase();
 		  if (lowerCaseValue === "") {
-			filterDataItems(filters);
+			sortData(arg);
 		}
 		  else {
 			  const filteredData = arg.filter(item => {
@@ -110,7 +108,7 @@ const [filters, setFilters] = useState({
 
 	useEffect(() => {
 		sortData(initialData)
-	},[])
+	},[initialData])
 
 	// Function passed to Search.js
 	const searchData = (arg) => {

@@ -16,7 +16,7 @@ const Table = ({data}) => {
 			</thead>
 			<tbody>
 				{data.map(restaurant => {
-				return <tr key={restaurant.id}>
+				return <tr key={restaurant.id }>
 						<td>{restaurant.name}</td>
 						<td>{restaurant.address1}</td>
 						<td>{restaurant.city}</td>
