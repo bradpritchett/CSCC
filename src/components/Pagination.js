@@ -22,7 +22,7 @@ const Pagination = ({pagesPer, page, total, paginate}) => {
 		} 
 	}, [page])
 	
-if (total < 10) {
+if (total <= 10) {
 	return (
 		<></>
 	)

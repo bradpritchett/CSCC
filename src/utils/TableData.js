@@ -26,6 +26,9 @@ const [filters, setFilters] = useState({
 			})
 	}, []);
 
+	// Data state set here only
+	const dataReducer = arg => setData(arg);
+
 	// Alphabetical sort of returned data
 	const sortData = (arg) => {
 		let sortedData = [...arg];
@@ -42,9 +45,6 @@ const [filters, setFilters] = useState({
 		dataReducer(sortedData)
 		//Sent to the reducer to set state with sorted date
 	};
-	
-	// Data state set here only
-	const dataReducer = arg => setData(arg);
 
 	const finalFilter = (filteredData) => {
 		if (filteredData.length === 0) {
@@ -59,14 +59,14 @@ const [filters, setFilters] = useState({
 	}
 
 	// Search function
-	function searchItems(sortedData) {
+	function searchItems(filteredData) {
 		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
 		const lowerCaseValue = searchText.toLowerCase();
 		  if (lowerCaseValue === "") {
-			  sortData(sortedData);
+			  sortData(filteredData);
 		}
 		  else {
-			const filteredData = sortedData.filter(item => {
+			const filteredData = filteredData.filter(item => {
 			return Object.keys(item).some(key =>
 				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
 			);
