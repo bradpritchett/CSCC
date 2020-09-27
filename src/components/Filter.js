@@ -15,6 +15,7 @@ const Filter = ({filterDataItems, name}) => {
 	   }
 	   return options;
 	};
+	
 	// Processes filter selection
 	function selected(e) 	 {
 		let key = e.target.name;
@@ -25,7 +26,6 @@ const Filter = ({filterDataItems, name}) => {
 	};
 
 	return (
-		
 		<select name={name} onChange={selected} >
 			{(generateOptions())}
 		</select>

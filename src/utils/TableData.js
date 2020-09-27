@@ -17,18 +17,11 @@ const [filters, setFilters] = useState({
 	state: "All States",
 	genre: "All Genre"
 })
-
-	// Fetching data on mount
-	useEffect(() => {
-		API.tables()
-			.then(res => {
-				setInitialData(res);
-			})
-	}, []);
+	// Sorted data state set here only
+	const dataReducer = sortedData => setData(sortedData);
 
 	// Alphabetical sort of returned data
-	const sortData = (arg) => {
-		let sortedData = [...arg];
+	const sortData = (sortedData) => {
 
 		sortedData.sort((a,b) => {
 			if (a.name < b.name) {
@@ -39,12 +32,10 @@ const [filters, setFilters] = useState({
 			}
 			return 0;
 		});
-		dataReducer(sortedData)
-		//Sent to the reducer to set state with sorted date
+		//Sent to the reducer to set state with sorted data
+		dataReducer(sortedData);
 	};
 	
-	// Data state set here only
-	const dataReducer = arg => setData(arg);
 
 	const finalFilter = (filteredData) => {
 		if (filteredData.length === 0) {
@@ -56,7 +47,7 @@ const [filters, setFilters] = useState({
 			else {
 				return sortData(filteredData);	
 			}
-	}
+	};
 
 	// Search function
 	function searchItems(sortedData) {
@@ -73,14 +64,11 @@ const [filters, setFilters] = useState({
 		  });
 
 		  finalFilter(filteredData)
-		 
 		}
-	}
+	};
 
 	// Processes filter changes sent from Filter.js
 	function filterItems() {
-		//resets pagination to first page
-
 		const state = filters.state;
 		const genre = filters.genre;
 		let filteredData = initialData;
@@ -107,30 +95,39 @@ const [filters, setFilters] = useState({
 			else {
 				searchItems(filteredData)
 			}
-		 
 	};
-
 	
-	// Runs Search filter function when state.searchText is updated
+	// Resets pagination and runs Search filter function when searchText is updated
 	useEffect(() => {		
 		setPage(1);
 		filterItems();
 	}, [searchText]);
 	
+	// Runs filters when filters are changed
 	useEffect(() => {
 		setPage(1);
 		filterItems();
-	}, [filters])
+	}, [filters]);
 
+	// Runs filters on first processed data
 	useEffect(() => {
 		filterItems()
-	},[initialData])
+	},[initialData]);
+
+	// Fetching data on mount
+	useEffect(() => {
+		API.tables()
+			.then(res => {
+				setInitialData(res);
+			})
+	}, []);
 
 	// Function passed to Search.js
 	const searchData = (arg) => {
 		setSearchText(arg);
 	}
 
+	// On return from filter component, builds returned args into new filter
 	const filterDataItems = (arg) => {
 		let newKey = Object.keys(arg);
 		newKey = newKey[0];
