@@ -45,6 +45,25 @@ const [filters, setFilters] = useState({
 	// Data state set here only
 	const dataReducer = arg => { setData(arg)};
 
+
+
+	// Search function
+	function searchItems(arg) {
+		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
+		const lowerCaseValue = searchText.toLowerCase();
+		  if (lowerCaseValue === "") {
+			sortData(arg);
+		}
+		  else {
+			  const filteredData = arg.filter(item => {
+			return Object.keys(item).some(key =>
+				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
+			);
+		  });
+		  sortData(filteredData);
+		}
+	}
+
 	// Processes filter changes sent from Filter.js
 	function filterItems() {
 		//resets pagination to first page
@@ -78,22 +97,6 @@ const [filters, setFilters] = useState({
 			}
 	};
 
-	// Search function
-	function searchItems(arg) {
-		const excludeKeys = ["id", "address1", "state", "zip", "lat", "long","telephone","tags", "website","hours","attire"];
-		const lowerCaseValue = searchText.toLowerCase();
-		  if (lowerCaseValue === "") {
-			sortData(arg);
-		}
-		  else {
-			  const filteredData = arg.filter(item => {
-			return Object.keys(item).some(key =>
-				excludeKeys.includes(key) ? false : item[key].toString().toLowerCase().includes(lowerCaseValue)
-			);
-		  });
-		  sortData(filteredData);
-		}
-	}
 
 	// Runs Search filter function when state.searchText is updated
 	useEffect(() => {		
