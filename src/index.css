@@ -122,6 +122,9 @@ ul.pagination {
 @media 
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
+	.container {
+		margin:7px;
+	}
 	table { 
 		width: 100%; 
 		border-collapse: collapse; 
@@ -139,6 +142,7 @@ only screen and (max-width: 760px),
 		padding: 6px; 
 		border: 1px solid #ccc; 
 		text-align: left; 
+		word-break: break-word;
 	  }
 	/* Force table to not be like tables anymore */
 	table, thead, tbody, th, td, tr { 
