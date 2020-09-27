@@ -16,13 +16,13 @@ const Table = ({data}) => {
 			</thead>
 			<tbody>
 				{data.map(restaurant => {
-					return <tr key={restaurant.id}>
-							<td>{restaurant.name}</td>
-							<td>{restaurant.address1}</td>
-							<td>{restaurant.city}</td>
-							<td>{restaurant.state}</td>
-							<td>{restaurant.telephone}</td>
-							<td>{restaurant.genre}</td>
+				return <tr key={restaurant.id}>
+						<td>{restaurant.name}</td>
+						<td>{restaurant.address1}</td>
+						<td>{restaurant.city}</td>
+						<td>{restaurant.state}</td>
+						<td>{restaurant.telephone}</td>
+						<td>{restaurant.genre}</td>
 					</tr>
 				})}
 			</tbody>

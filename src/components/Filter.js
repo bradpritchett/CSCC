@@ -1,10 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {state,genres} from "../utils/Data";
 
 const Filter = ({filterDataItems, name}) => {
-
-	
-
+	// Pulls option lists from utils/Data
 	const generateOptions = () => {
 		let options = [];
 		if (name === "state") {
@@ -17,19 +15,14 @@ const Filter = ({filterDataItems, name}) => {
 	   }
 	   return options;
 	};
-
+	// Processes filter selection
 	function selected(e) 	 {
 		let key = e.target.name;
 		let value = e.target.value;
-		filterReducer(key, value);
-	};
-
-	const filterReducer = (key,value) => {
-		let obj = {}
-		obj = { [key]: value}
+		let obj = {};
+		obj = { [key]: value};
 		filterDataItems(obj)
-	}
-
+	};
 
 	return (
 		
